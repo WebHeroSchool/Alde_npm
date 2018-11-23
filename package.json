@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "hello": "node hello.js",
+    "create": "mkdir build",
+    "delete": "rm -rf build"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/WebHeroSchool/Alde_npm/issues"
   },
-  "homepage": "https://github.com/WebHeroSchool/Alde_npm#readme"
+  "homepage": "https://github.com/WebHeroSchool/Alde_npm#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }
