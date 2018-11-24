@@ -1,8 +1,12 @@
 const gulp = require('gulp');
+const babel = require('gulp-babel');
 
 gulp.task('js', () => {
-    return gulp.src('*js')
-        .pipe(gulp.dest('prod/script'));
+    return gulp.src('scripts/*js')
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
+        .pipe(gulp.dest('prod/scripts'));
 });
 
 gulp.task('css', () => {
