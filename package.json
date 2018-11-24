@@ -24,6 +24,8 @@
     "@babel/preset-env": "^7.1.6",
     "gulp": "^3.9.1",
     "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.1",
     "gulp-util": "^3.0.8"
   }
 }
