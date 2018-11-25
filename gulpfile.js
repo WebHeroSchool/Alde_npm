@@ -5,26 +5,46 @@ const uglify = require('gulp-uglify');
 const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 
+const paths = {
+    src: {
+        styles: 'src/css/*css',
+        scripts: 'src/scripts/*js'
+    },
+    build: {
+        styles: 'prod/css/',
+        scripts: 'prod/scripts'
+    },
+    buildNames: {
+        styles: 'style.min.css',
+        scripts: 'script.min.js'
+    }
+}
 
-gulp.task('build', ['js', 'css']);
+
+gulp.task('default', ['js', 'css']);
 
 gulp.task('js', () => {
-    return gulp.src('scripts/*js')
+    return gulp.src([paths.src.scripts])
         .pipe(sourcemaps.init())
-            .pipe(concat('index.js'))
+            .pipe(concat(paths.buildNames.scripts))
             .pipe(babel({
                 presets: ['@babel/env']
             }))
             .pipe(uglify())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('prod/scripts'));
+        .pipe(gulp.dest(paths.build.scripts));
 });
 
 gulp.task('css', () => {
-    return gulp.src('css/*css')
+    return gulp.src([paths.src.styles])
         .pipe(sourcemaps.init())
-            .pipe(concat('index.css'))
+            .pipe(concat(paths.buildNames.styles))
             .pipe(cssnano())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('prod/css'));
+        .pipe(gulp.dest(paths.build.styles));
+});
+
+gulp.task('watch', () => {
+    gulp.watch(paths.src.scripts, ['js'])
+    gulp.watch(paths.src.styles, ['css'])
 });
