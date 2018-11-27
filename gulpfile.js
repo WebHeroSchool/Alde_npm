@@ -8,6 +8,12 @@ const browserSync = require('browser-sync').create();
 const gulpif = require('gulp-if');
 const env = require('gulp-env');
 const clean = require('gulp-clean');
+const postcss = require('gulp-postcss');
+const nested = require('postcss-nested');
+const postcssShort = require('postcss-short');
+const assets  = require('postcss-assets');
+const postcssPresetEnv = require('postcss-preset-env');
+const autoprefixer = require('autoprefixer');
 
 const paths = {
     src: {
@@ -42,8 +48,16 @@ gulp.task('js', () => {
 });
 
 gulp.task('css', () => {
+    const plugins = [
+        nested(),
+        postcssShort(),
+        assets(),
+        postcssPresetEnv(),
+        autoprefixer()
+    ];
     return gulp.src([paths.src.styles])
         .pipe(sourcemaps.init())
+        .pipe(postcss(plugins))
             .pipe(concat(paths.buildNames.styles))
             .pipe(gulpif(process.env.NODE_ENV === 'production', cssnano()))
         .pipe(sourcemaps.write())
