@@ -49,11 +49,14 @@ gulp.task('js', () => {
 
 gulp.task('css', () => {
     const plugins = [
-        nested(),
-        postcssShort(),
-        assets(),
-        postcssPresetEnv(),
-        autoprefixer()
+        nested,
+        postcssShort,
+        assets ({
+            loadPaths: ['src/css/images/'],
+            relativeTo: 'src/css/'
+        }),
+        postcssPresetEnv({ stage: 0}),
+        autoprefixer
     ];
     return gulp.src([paths.src.styles])
         .pipe(sourcemaps.init())

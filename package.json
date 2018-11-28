@@ -33,8 +33,8 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
     "gulp-util": "^3.0.8",
-    "nested": "0.0.1-pre2",
     "postcss-assets": "^5.0.0",
+    "postcss-nested": "^4.1.0",
     "postcss-preset-env": "^6.4.0",
     "postcss-short": "^5.0.0"
   },
