@@ -18,6 +18,8 @@ const handlebars = require('gulp-compile-handlebars');
 const rename = require("gulp-rename");
 const glob = require("glob");
 
+const text = require("./src/test.json");
+
 const paths = {
     src: {
         dir: 'src',
@@ -50,7 +52,7 @@ gulp.task('compile', () => {
             };
 
             return gulp.src(`${paths.src.dir}/index.hbs`)
-            .pipe(handlebars({}, option))
+            .pipe(handlebars(text, option))
             .pipe(rename('index.html'))
             .pipe(gulp.dest(paths.build.dir));
         }
