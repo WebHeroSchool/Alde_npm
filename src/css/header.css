@@ -1,3 +1,45 @@
+@custom-selector :--heading h1, h2, h3, h4, h5, h6;
+
+
+
 body {
     color: green;
+h1 {
+    color: red;
 }
+}
+.class {
+   &_sub {
+
+   }
+}
+
+.short {
+    margin: * 10px;
+    padding: * 15px;
+
+    size: 20px;
+}
+
+.assets {
+    width: width('img.jpg');
+    height: height('img.jpg');
+}
+
+/* postcssPresetEnv */
+:--heading {
+    margin-block: 0;
+}
+a {
+    color: rgb(0 0 100% / 90%);
+  
+    &:hover {
+      color: rebeccapurple;
+    }
+  }
+
+  .autoprefix {
+    ::placeholder {
+        color: gray;
+      }
+  }
