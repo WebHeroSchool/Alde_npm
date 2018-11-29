@@ -48,7 +48,11 @@ gulp.task('compile', () => {
         if (!err) {
             const option = {
                 ignorePartials: true,
-                batch: files.map(item => item.slice(0, item.lastIndexOf('/')))
+                batch: files.map(item => item.slice(0, item.lastIndexOf('/'))),
+                helpers: {
+                    up: str => str.toUpperCase(),
+                    copy: str => str + ' ' + str
+                }
             };
 
             return gulp.src(`${paths.src.dir}/index.hbs`)
