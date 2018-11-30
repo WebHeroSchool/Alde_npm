@@ -14,25 +14,53 @@ const postcssShort = require('postcss-short');
 const assets  = require('postcss-assets');
 const postcssPresetEnv = require('postcss-preset-env');
 const autoprefixer = require('autoprefixer');
+const handlebars = require('gulp-compile-handlebars');
+const rename = require("gulp-rename");
+const glob = require("glob");
+
+const text = require("./src/test.json");
 
 const paths = {
     src: {
-        styles: 'src/css/*css',
+        dir: 'src',
+        styles: 'src/css/**/*css',
         scripts: 'src/scripts/*js'
     },
     build: {
+        dir: 'prod',
         styles: 'prod/css/',
         scripts: 'prod/scripts'
     },
     buildNames: {
         styles: 'style.min.css',
         scripts: 'script.min.js'
-    }
+    },
+    templates: 'src/templates/**/*.hbs'
 }
 
 env({
     file: '.env',
     type: 'ini',
+});
+
+gulp.task('compile', () => {
+    glob(paths.templates, (err, files) => {
+        if (!err) {
+            const option = {
+                ignorePartials: true,
+                batch: files.map(item => item.slice(0, item.lastIndexOf('/'))),
+                helpers: {
+                    up: str => str.toUpperCase(),
+                    copy: str => str + ' ' + str
+                }
+            };
+
+            return gulp.src(`${paths.src.dir}/index.hbs`)
+            .pipe(handlebars(text, option))
+            .pipe(rename('index.html'))
+            .pipe(gulp.dest(paths.build.dir));
+        }
+    })
 });
 
 gulp.task('js', () => {
