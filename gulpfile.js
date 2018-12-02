@@ -11,14 +11,16 @@ const clean = require('gulp-clean');
 const postcss = require('gulp-postcss');
 const nested = require('postcss-nested');
 const postcssShort = require('postcss-short');
-const assets  = require('postcss-assets');
+const assets = require('postcss-assets');
 const postcssPresetEnv = require('postcss-preset-env');
 const autoprefixer = require('autoprefixer');
 const handlebars = require('gulp-compile-handlebars');
 const rename = require("gulp-rename");
 const glob = require("glob");
+const eslint = require('gulp-eslint');
 
 const text = require("./src/test.json");
+const jsLint = require("./eslintrc.json");
 
 const paths = {
     src: {
@@ -35,12 +37,21 @@ const paths = {
         styles: 'style.min.css',
         scripts: 'script.min.js'
     },
-    templates: 'src/templates/**/*.hbs'
-}
+    templates: 'src/templates/**/*.hbs',
+    lint: {
+    scripts: ['**/*.js', '!node_modules/**/*', '!prod/**/*']
+    }
+};
 
 env({
     file: '.env',
     type: 'ini',
+});
+
+gulp.task('lint', () => {
+    gulp.src(paths.lint.scripts)
+        .pipe(eslint(jsLint))
+        .pipe(eslint.format());
 });
 
 gulp.task('compile', () => {
@@ -60,7 +71,7 @@ gulp.task('compile', () => {
             .pipe(rename('index.html'))
             .pipe(gulp.dest(paths.build.dir));
         }
-    })
+    });
 });
 
 gulp.task('js', () => {
@@ -92,7 +103,7 @@ gulp.task('css', () => {
             .pipe(concat(paths.buildNames.styles))
             .pipe(gulpif(process.env.NODE_ENV === 'production', cssnano()))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(paths.build.styles))
+        .pipe(gulp.dest(paths.build.styles));
 });
 
 gulp.task('build', ['js', 'css']);
