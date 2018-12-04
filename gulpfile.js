@@ -18,9 +18,12 @@ const handlebars = require('gulp-compile-handlebars');
 const rename = require("gulp-rename");
 const glob = require("glob");
 const eslint = require('gulp-eslint');
+const styleLint = require('stylelint');
+const reporter = require('postcss-reporter');
 
 const text = require("./src/test.json");
 const jsLint = require("./eslintrc.json");
+const cssLint = require("./stylelintrc.json");
 
 const paths = {
     src: {
@@ -39,7 +42,9 @@ const paths = {
     },
     templates: 'src/templates/**/*.hbs',
     lint: {
-    scripts: ['**/*.js', '!node_modules/**/*', '!prod/**/*']
+        scripts: ['**/*.js', '!node_modules/**/*', '!prod/**/*'],
+        style: ['**/*.css', '!node_modules/**/*', '!prod/**/*']
+
     }
 };
 
@@ -48,11 +53,25 @@ env({
     type: 'ini',
 });
 
-gulp.task('lint', () => {
+gulp.task('jslint', () => {
     gulp.src(paths.lint.scripts)
         .pipe(eslint(jsLint))
         .pipe(eslint.format());
 });
+
+gulp.task('csslint', () => {
+    gulp.src(paths.lint.style)
+        .pipe(postcss([
+            styleLint(cssLint),
+            reporter({
+                clearAllMessages: true,
+                throwError: false
+            })
+        ]));
+});
+
+gulp.task('lint', ['jslint', 'csslint']);
+
 
 gulp.task('compile', () => {
     glob(paths.templates, (err, files) => {
