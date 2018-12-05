@@ -66,7 +66,7 @@ gulp.task('csslint', () => {
             styleLint(cssLint),
             reporter({
                 clearAllMessages: true,
-                throwError: false
+                throwError: true
             })
         ]));
 });
