@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "gulp lint",
+    "test": "gulp lint && exit 0",
     "start": "gulp dev",
-    "build": "gulp prod",
-    "prepush": "npm run test"
-    
+    "build": "gulp prod"
   },
   "prepush": [
     "test"
@@ -43,7 +41,6 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
     "gulp-util": "^3.0.8",
-    "husky": "^1.2.0",
     "postcss-assets": "^5.0.0",
     "postcss-nested": "^4.1.0",
     "postcss-preset-env": "^6.4.0",
