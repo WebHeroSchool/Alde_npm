@@ -8,24 +8,21 @@
     "start": "gulp dev",
     "build": "gulp prod"
   },
-  "pre-push": {
-    "run": ["test"]
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WebHeroSchool/Alde_npm.git"
   },
-  
-
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/WebHeroSchool/Alde_npm/issues"
   },
-
   "homepage": "https://github.com/WebHeroSchool/Alde_npm#readme",
-
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
@@ -46,6 +43,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
     "gulp-util": "^3.0.8",
+    "husky": "^1.2.0",
     "postcss-assets": "^5.0.0",
     "postcss-nested": "^4.1.0",
     "postcss-preset-env": "^6.4.0",
