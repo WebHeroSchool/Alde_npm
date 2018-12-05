@@ -9,7 +9,7 @@
     "build": "gulp prod"
   },
   "pre-push": [
-    "npm run test"
+    "test"
   ],
   "repository": {
     "type": "git",
