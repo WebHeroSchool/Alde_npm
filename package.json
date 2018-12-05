@@ -8,8 +8,8 @@
     "start": "gulp dev",
     "build": "gulp prod"
   },
-  "prepush": [
-    "npm test"
+  "pre-push": [
+    "npm run test"
   ],
   "repository": {
     "type": "git",
