@@ -4,10 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "gulp lint",
+    "test": "gulp lint && exit 1",
     "start": "gulp dev",
     "build": "gulp prod"
   },
+
+  "pre-push": [
+    "test"
+  ],
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WebHeroSchool/Alde_npm.git"
@@ -43,6 +48,7 @@
     "postcss-preset-env": "^6.4.0",
     "postcss-reporter": "^6.0.0",
     "postcss-short": "^5.0.0",
+    "pre-push": "^0.1.1",
     "stylelint": "^9.9.0"
   },
   "dependencies": {}
