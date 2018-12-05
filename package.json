@@ -8,15 +8,15 @@
     "start": "gulp dev",
     "build": "gulp prod"
   },
+  "pre-push": [
+    "test"
+  ],
 
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WebHeroSchool/Alde_npm.git"
   },
   
-  "pre-push": [
-    "test"
-  ],
 
   "author": "",
   "license": "ISC",
