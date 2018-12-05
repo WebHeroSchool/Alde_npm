@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "gulp lint && exit 1",
+    "test": "gulp lint || exit 1",
     "start": "gulp dev",
     "build": "gulp prod"
   },
   "husky": {
     "hooks": {
+      "pre-commit": "test",
       "pre-push": "test"
     }
   },
