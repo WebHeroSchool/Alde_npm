@@ -68,7 +68,7 @@ gulp.task('csslint', () => {
                 throwError: false
             })
         ]));
-})
+});
 
 gulp.task('lint', ['jslint', 'csslint']);
 
