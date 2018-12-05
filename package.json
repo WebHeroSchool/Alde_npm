@@ -9,20 +9,23 @@
     "build": "gulp prod"
   },
 
-  "pre-push": [
-    "test"
-  ],
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WebHeroSchool/Alde_npm.git"
   },
+  
+  "pre-push": [
+    "test"
+  ],
+
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/WebHeroSchool/Alde_npm/issues"
   },
+
   "homepage": "https://github.com/WebHeroSchool/Alde_npm#readme",
+
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
