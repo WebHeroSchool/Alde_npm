@@ -8,9 +8,9 @@
     "start": "gulp dev",
     "build": "gulp prod"
   },
-  "pre-push": [
-    "test"
-  ],
+  "pre-push": {
+    "run": ["test"]
+  },
 
   "repository": {
     "type": "git",
