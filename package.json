@@ -4,16 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    
+    "test": "gulp lint || exit 1",
     "start": "gulp dev",
-    "build": "gulp prod"
+    "build": "gulp prod",
+    "precommit": "npm test",
+    "prepush": "npm test"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm test"
-    }
-  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WebHeroSchool/Alde_npm.git"
