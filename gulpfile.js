@@ -56,7 +56,8 @@ env({
 gulp.task('jslint', () => {
     gulp.src(paths.lint.scripts)
         .pipe(eslint(jsLint))
-        .pipe(eslint.format());
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 });
 
 gulp.task('csslint', () => {
@@ -65,7 +66,7 @@ gulp.task('csslint', () => {
             styleLint(cssLint),
             reporter({
                 clearAllMessages: true,
-                throwError: false
+                throwError: true
             })
         ]));
 });
