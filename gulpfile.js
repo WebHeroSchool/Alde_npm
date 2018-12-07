@@ -20,6 +20,7 @@ const glob = require("glob");
 const eslint = require('gulp-eslint');
 const styleLint = require('stylelint');
 const reporter = require('postcss-reporter');
+const filter = require('gulp-filter');
 
 const text = require("./src/test.json");
 const jsLint = require("./eslintrc.json");
@@ -40,12 +41,14 @@ const paths = {
         styles: 'style.min.css',
         scripts: 'script.min.js'
     },
-    templates: 'src/templates/**/*.hbs',
     lint: {
         scripts: ['**/*.js', '!node_modules/**/*', '!prod/**/*'],
         style: ['**/*.css', '!node_modules/**/*', '!prod/**/*']
-
-    }
+        
+    },
+    templates: 'src/templates/**/*.hbs',
+    assets: 'src/**/*.png',
+    contextJson: 'src/test.json',
 };
 
 env({
@@ -110,12 +113,8 @@ gulp.task('css', () => {
     const plugins = [
         nested,
         postcssShort,
-        assets ({
-            loadPaths: ['src/css/images/'],
-            relativeTo: 'src/css/'
-        }),
         postcssPresetEnv({ stage: 0}),
-        autoprefixer
+        autoprefixer({ browsers: ['last 2 version'] })
     ];
     return gulp.src([paths.src.styles])
         .pipe(sourcemaps.init())
@@ -126,26 +125,48 @@ gulp.task('css', () => {
         .pipe(gulp.dest(paths.build.styles));
 });
 
-gulp.task('build', ['js', 'css']);
+gulp.task('assets', () => {
+    glob(paths.assets, (err, files) => {
+        if (!err) {
+            gulp.src(files)
+                .pipe(gulp.dest(`${paths.build.dir}/assets`));
+        } else {
+            throw err;
+        }
+    });
+});
+
+gulp.task('fonts', () => {
+    gulp.src('./src/fonts/**/*')
+        .pipe(filter(['*.woff', '*.woff2', '*.ttf']))
+        .pipe(gulp.dest(`${paths.build.dir}/fonts`));
+});
 
 gulp.task('sync', () => {
     browserSync.init({
         server: {
-            baseDir: "./"
+            baseDir: "./prod"
         }
     });
-    gulp.watch(paths.src.scripts, ['js-watch']);
-    gulp.watch(paths.src.styles, ['css-watch']);
 });
 
-gulp.task('js-watch', ['js'], () => browserSync.reload());
-gulp.task('css-watch', ['css'], () => browserSync.reload());
+gulp.task('watch', () => {
+    gulp.watch(paths.templates, ['compile']);
+    gulp.watch(paths.src.scripts, ['js']);
+    gulp.watch(paths.src.styles, ['css']);
+    gulp.watch(paths.contextJson)
+        .on('change', browserSync.reload);
+    gulp.watch(`${paths.build.dir}/**/*`)
+        .on('change', browserSync.reload);
+});
+
 gulp.task('clean', () => {
     return gulp.src('prod', {read: false})
         .pipe(clean());
 });
 
+gulp.task('build', ['js', 'css', 'compile', 'fonts', 'assets']);
 
 gulp.task('prod', ['build']);
-gulp.task('dev', ['build', 'sync']);
+gulp.task('dev', ['build', 'watch', 'sync']);
 
